@@ -94,6 +94,7 @@ flowchart TD
 - **VAD preprocessing** — Optional silence trimming via FluidAudio Silero v6 before transcription, with automatic timestamp remapping
 - **AI meeting notes generation** — Structured Markdown via [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code), OpenAI-compatible APIs (Ollama, LM Studio, etc.), or disabled (save transcript only)
 - **Configurable meeting notes prompt** — Custom prompt file support (`~/Library/Application Support/MeetingTranscriber/protocol_prompt.md`) with `{LANGUAGE}`, `{MEETING_DATE}` (`YYYY-MM-DD`), and `{MEETING_TIME}` (`HH:mm`) variables; recordings include authoritative metadata, while imports and recovery jobs resolve time placeholders to `Unknown`
+- **Notion export** — Optionally export generated meeting notes to a Notion database as soon as a job finishes; runs in the background so a slow Notion call never holds up the next job. Retry on failure, speaker-name tags (opt-in), and re-export after renaming speakers are supported
 - **Manual recording** — Record any app via app picker, not just detected meetings
 - **Multi-format input** — Supports WAV, MP3, M4A, MP4, FLAC, plus the phone and messenger voice formats AMR, 3GP/3G2 and OPUS/OGG; MKV and WebM additionally need ffmpeg
 - **Update checker** — Notifies when a new version is available
@@ -253,7 +254,7 @@ Open Settings via the menu bar item or ⌘,.
 | **Audio** | Microphone device, voice activity detection (VAD), per-channel silence indicator, echo cancellation (off by default) |
 | **Transcribe** | ASR engine (WhisperKit / Parakeet) and per-engine options (model incl. a custom WhisperKit model, language, custom vocabulary), terminology normalization rules, live caption overlay (PoC) |
 | **Speakers** | Diarization, mic speaker name, known voices, recognition stats |
-| **Output** | LLM provider (Claude CLI / OpenAI-compatible / none), transcript-retention options, notes language, output folder, custom prompt |
+| **Output** | LLM provider (Claude CLI / OpenAI-compatible / none), transcript-retention options, notes language, output folder, custom prompt, Notion database export |
 | **Advanced** | Permissions status, diagnostics, version info |
 
 ### Custom WhisperKit models
